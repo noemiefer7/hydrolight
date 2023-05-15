@@ -18,7 +18,7 @@ import csv
 #                           '1.4976681723040033','-0.010053516793850963','-0.0003469438780323575'])
 
 
-#see if it is working
+#see if it is working ? 
 
 
 wavebands=np.arange(400,711,5)
