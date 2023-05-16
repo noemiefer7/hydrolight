@@ -64,14 +64,18 @@ bio_opt.set_iop(
 fwd_model=hd.PolynomialForward(bio_opt)
 
 #atmospheric correction
-day=223
-teta_v=12.6
-teta_s=29.4
+j=146
+d = 1 + 0.016*np.cos(2*np.pi*((j-3)/365))
+teta_v = 16.10000
+teta_s = 62.06009
+# day=223
+# teta_v=12.6
+# teta_s=29.4
 
-fid=open('hydropt/mjosa.dat','rb')
-C=441
-L=550
-B=4
+fid=open('hydropt/petite_image_HICO_var_26_mai_2013.img','rb')
+C=400
+L=400
+B=63
 
 
 data=np.fromfile(fid,dtype=np.uint8,count=C*L*B)
@@ -86,7 +90,7 @@ for i in range (B):
 L_TOA=CN/50   #top of the atmosphere luminance
 
 #Earth sun distance
-d=1+0.016*np.cos(2*np.pi*(day-3)/365)
+#d=1+0.016*np.cos(2*np.pi*(day-3)/365)
 with open ('hydropt/F0.txt') as data:
     lambda_,F0=np.loadtxt(data,dtype=float, unpack=True)
     
@@ -171,4 +175,14 @@ inv_model=hd.InversionModel(
     fwd_model=fwd_model,
     minimizer=lmfit.minimize)
 #estimate parameters
-xhat=inv_model.invert(y=rrs,x=x0)
+phyto=[]
+cdom=[]
+
+#estimate parameters
+for i in range (L):
+    print(i)
+    for j in range (C):
+        Rrs_mesure=np.squeeze(rho_s[i,j,:])
+        xhat=inv_model.invert(y=Rrs_mesure,x=x0)
+        phyto.append(xhat.last_internal_values[0])
+        cdom.append(xhat.last_internal_values[1])
