@@ -2,7 +2,7 @@ Here, we are trying to adapt the hydrolight optimization to Sentinel 3.
 To do the adaptation, we are using the example just below and adding some lines as the lines corresponding to the atmospheric corrections. Here, the atmospheric corrections are used to have a reflectance that's going to be used for the inversion of our model. 
 After the inversion, we will obtain the quantities of phytoplankton and CDOM for each pixel of the image. 
 
-For now, we still have to do some modifications in the code as finding a way to adapt the wavelengths to the satellite's captor with which the images were taken. 
+The modifications for the wavebands are done. We must now collect an image from Sentinel 3 and test the code with it. The problem is that the prog has to be ran during almost 6 hours in order to obtain the results. We should try to find a way to optimize it. 
 
 
 
