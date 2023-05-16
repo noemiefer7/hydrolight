@@ -2,27 +2,14 @@ import hydropt.hydropt as hd
 import numpy as np
 import matplotlib.pyplot as plt
 import cv2 as cv
-from hydropt.bio_optics import H2O_IOP_DEFAULT, a_phyto_base_HSI
 import lmfit
 import csv
-
-# for i in range (1,63):
-#     with open('hydropt/data/PACE_polynom_04_h2o.csv','a',newline='',encoding='utf-8') as f:
-#         writer=csv.writer(f)
-#         c=710+i*5
-#         c=str(c)
-#         writer.writerow([c,'-2.9647619351540513','-1.2361097525010263','0.9104449363817371',
-#                           '12.840776041695658','1.264877309731138','0.06692509149478654',
-#                           '69.09924920855089','8.443800353333097','0.49886792963342286',
-#                           '0.008579899967093102','706.9733216481112','59.20770873339014',
-#                           '1.4976681723040033','-0.010053516793850963','-0.0003469438780323575'])
+from hydropt.bio_optics import H2O_IOP_DEFAULT, a_phyto_base_HSI
 
 
-wavebands=np.arange(400,711,5)
-# wavebands=np.array([400,410,440,490,510,560,620,665,675,
-#                     680,710,755,760,765,770,
-#                     780,865,885,900,940,1020])
 
+#Wavebands corresping to Sentinel 3
+wavebands=np.arange(400,1021,10)
 
 #creation of an optical model
 def clear_nat_water(*args):
@@ -184,5 +171,8 @@ for i in range (L):
     for j in range (C):
         Rrs_mesure=np.squeeze(rho_s[i,j,:])
         xhat=inv_model.invert(y=Rrs_mesure,x=x0)
+        #Phytoplankton and CDOM proportion in the pixel (i,j)
         phyto.append(xhat.last_internal_values[0])
         cdom.append(xhat.last_internal_values[1])
+
+#The prog works but has to be ran during almost 6 hours, I should find a way to optimize it        

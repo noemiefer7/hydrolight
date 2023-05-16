@@ -8,8 +8,9 @@ PHYTO_SC_SIOP = pkg_resources.resource_filename('hydropt', 'data/psc_absorption_
 H2O_IOP_DEFAULT_STREAM = pkg_resources.resource_filename('hydropt', '/data/water_mason016.csv')
 H2O_IOP_DEFAULT = pd.read_csv(H2O_IOP_DEFAULT_STREAM, sep=',', index_col='wavelength')
 
-OLCI_WBANDS = np.array([400, 412.5, 442.5, 490, 510, 560, 620, 665, 673.75, 681.25, 708.75])
-HSI_WBANDS = np.arange(400, 711, 5)
+#Sentinel 3 wavebands
+OLCI_WBANDS = np.array([400, 412.5, 442.5, 490, 510, 560, 620, 665, 673.75, 681.25, 708.75, 753.75, 761.25,764.375,767.5,778.75,865,885,900,940,1020])
+HSI_WBANDS = np.arange(400, 1021, 10)
 WBANDS = OLCI_WBANDS
 
 # load phytoplankton basis vector
@@ -28,10 +29,10 @@ nano_siop.set_index('wavelength', inplace=True)
 
 micro_siop = a_psc_base_full[['wavelength','micro', 'micro_se']]
 micro_siop.set_index('wavelength', inplace=True)
-# set absorption and std to 0 for 710 nm
-pico_siop.loc[710,:] = [0,0]
-nano_siop.loc[710,:] = [0,0]
-micro_siop.loc[710,:] = [0,0]
+# set absorption and std to 0 for 1020 nm
+pico_siop.loc[1020,:] = [0,0]
+nano_siop.loc[1020,:] = [0,0]
+micro_siop.loc[1020,:] = [0,0]
 
 a_pico_base = interpolate_to_wavebands(data=pico_siop, wavelength=WBANDS)
 a_nano_base = interpolate_to_wavebands(data=nano_siop, wavelength=WBANDS)
