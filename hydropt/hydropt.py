@@ -68,7 +68,7 @@ class BioOpticalModel:
         return self._wavebands
 
     def set_iop(self, wavebands, **kwargs):
-        ndims = check_iop_dims(wavebands, **kwargs)
+        ndims = check_iop_dims(wavebands, **kwargs)[0]
         self._wavebands = wavebands
         # clear iop models and gradients
         self.iop_model = {}
